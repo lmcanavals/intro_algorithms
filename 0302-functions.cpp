@@ -23,6 +23,7 @@ float calcularSuma(float, float);
 
 int main() {
 
+	// uso de un procedimiento, invocación o llamada. (call)
 	procedimiento("Juan Pérez");
 
 	cout << "19 + 252 = " << calcularSuma(19, 252) << endl;
