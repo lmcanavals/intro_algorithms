@@ -33,7 +33,7 @@
 
 .replit
 Makefile
-.ccl-cache/
+.ccls-cache/
 main
 main-debug
 replit.nix
