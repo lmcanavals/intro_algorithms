@@ -173,6 +173,10 @@ int _kbhit() {
 	return bytesWaiting;
 }
 
+int _getch() {
+	return getchar();
+}
+
 /* endif del bloque _WIN32 (else) */
 #endif
 
