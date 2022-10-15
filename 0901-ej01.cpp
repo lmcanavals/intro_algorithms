@@ -44,6 +44,30 @@ size_t min(size_t* a, size_t* b, size_t* c, size_t* d) {
     return *d;
 }
 
+size_t maxOf3(size_t* a, size_t* b, size_t* c) {
+    if (*a > *b && *a > *c) {
+        return *a;
+    }
+    if (*b > *c) {
+        return *b;
+    }
+    return *c;
+}
+
+size_t secondMax(size_t* a, size_t* b, size_t* c, size_t* d) {
+    size_t x = max(a, b, c, d);
+    if (*a == x) {
+        return maxOf3(b, c, d);
+    }
+    if (*b == x) {
+        return maxOf3(a, c, d);
+    }
+    if (*c == x) {
+        return maxOf3(a, b, d);
+    }
+    return maxOf3(a, b, c);
+}
+
 int main() {
     srand(time(nullptr));
 
@@ -58,6 +82,7 @@ int main() {
 
         cout << *a << " " << *b << " " << *c << " " << *d << endl;
         cout << max(a, b, c, d) << endl;
+        cout << secondMax(a, b, c, d) << endl;
 
         *op = _getch();
     } while (*op != 'x');
