@@ -99,6 +99,14 @@ float readFloatRange(std::string msg, float min, float max) {
 	return num;
 }
 
+/**
+* generar número aleatorio entre a y b, [a, b> sin incluir b.
+*/
+int randint(int a, int b) {
+	return rand() % (b - a) + a;
+}
+
+
 /*************************************
  * elementos condicionales al sistema operativo
  * **********************************/
@@ -108,6 +116,25 @@ float readFloatRange(std::string msg, float min, float max) {
 /* si se compila en windows, intenta usar windows.h */
 #include <windows.h>
 #include <conio.h>
+
+enum Colors {
+	BLACK,
+	DARK_BLUE,
+	DARK_GREEN,
+	DARK_CYAN,
+	DARK_RED,
+	DARK_MAGENTA,
+	DARK_YELLOW,
+	DARK_WHITE,
+	BRIGHT_BLACK,
+	BRIGHT_BLUE,
+	BRIGHT_GREEN,
+	BRIGHT_CYAN,
+	BRIGHT_RED,
+	BRIGHT_MAGENTA,
+	BRIGHT_YELLOW,
+	WHITE
+};
 
 /* dormir (detener) proceso por x milisegundos */
 void sleep4(int milliseconds) {
@@ -125,6 +152,21 @@ void gotoxy(int x, int y) {
 	coord.X = x;
 	coord.Y = y;
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),  coord);
+}
+
+void background(int color) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, color << 4);
+}
+
+void foreground(int color) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, color);
+}
+
+void clearColor() {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, 7);
 }
 
 /* else del bloque _WIN32 */
