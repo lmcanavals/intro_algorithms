@@ -169,6 +169,11 @@ void clearColor() {
 	SetConsoleTextAttribute(handle, 7);
 }
 
+/* utilice solo esta funcion */
+void color(int forecolor, int backcolor = BLACK) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, backcolor << 4 | forecolor);
+}
 /* else del bloque _WIN32 */
 #else
 
