@@ -178,6 +178,25 @@ void clearColor() {
 #include <termios.h>
 #include <sys/ioctl.h>
 
+enum Colors {
+	BLACK,
+	DARK_RED,
+	DARK_GREEN,
+	DARK_YELLOW,
+	DARK_BLUE,
+	DARK_MAGENTA,
+	DARK_CYAN,
+	DARK_WHITE,
+	BRIGHT_BLACK,
+	BRIGHT_RED,
+	BRIGHT_GREEN,
+	BRIGHT_YELLOW,
+	BRIGHT_BLUE,
+	BRIGHT_MAGENTA,
+	BRIGHT_CYAN,
+	WHITE
+};
+
 /* dormir (detener) proceso por x milisegundos */
 void sleep4(int milliseconds) {
 	usleep(milliseconds * 1000);
@@ -191,6 +210,23 @@ void clear() {
 /* saltar a una posición x, y en la pantalla */
 void gotoxy(int x, int y) {
 	printf("%c[%d;%df", 0x1B, y, x);
+}
+
+void clearColor() {
+	printf("\e[0m");
+}
+
+void background(int color) {
+	if (color < 8) {
+		printf("\e[4%dm", color);
+	} else {
+		printf("\e[0;10%dm", color % 8);
+	}
+}
+
+void foreground(int color) {
+	int bold = color / 8;
+	printf("\e[%d;3%dm", bold, color % 8);
 }
 
 /* detección de tecla presionada para linux
