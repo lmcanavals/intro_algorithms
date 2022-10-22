@@ -18,11 +18,11 @@ int main() {
 	srand(time(nullptr));
 	int* x = new int[MAXDROPS];
 	int* y = new int[MAXDROPS];
-	int* color = new int[MAXDROPS];
+	int* chcolor = new int[MAXDROPS];
 	char* ch = new char[MAXDROPS];
 
 	int mx = (RIGHT + LEFT) / 2;
-	int my = BOTTOM;
+	int my = BOTTOM - 2;
 
 	int numdrops = 0;
 	int fallspeed = 1;
@@ -34,7 +34,7 @@ int main() {
 			if (dropFalls() && numdrops < MAXDROPS) {
 				x[numdrops] = i;
 				y[numdrops] = TOP;
-				color[numdrops] = randint(0, 16);
+				chcolor[numdrops] = randint(0, 16);
 				ch[numdrops] = randint('A', 'Z' + 1);
 				++numdrops;
 			}
@@ -44,21 +44,30 @@ int main() {
 		for (int i = 0; i < numdrops; ++i) {
 			if (y[i] < BOTTOM) {
 				gotoxy(x[i], y[i]);
-				foreground(color[i]);
+				color(chcolor[i]);
 				cout << ch[i];
 				y[i] += fallspeed;
+				if (mx == x[i] && my == y[i]) {
+					clear();
+					gotoxy(0, 0);
+					color(BRIGHT_RED);
+					cout << "GAME OVER!";
+					leave = true;
+					break;
+				}
 			} else {
 				--numdrops;
 				x[i] = x[numdrops];
 				y[i] = y[numdrops];
-				color[i] = color[numdrops];
+				chcolor[i] = chcolor[numdrops];
 				ch[i] = ch[numdrops];
 			}
 		}
+		if (leave) break;
 		gotoxy(mx, my);
-		foreground(BRIGHT_GREEN);
-		//background(BRIGHT_RED);
+		color(DARK_YELLOW, BRIGHT_YELLOW);
 		cout << (char)2;
+		clearColor();
 		if (_kbhit()) {
 			char key = _getch();
 			switch (key) {
@@ -75,7 +84,7 @@ int main() {
 
 	delete[] x;
 	delete[] y;
-	delete[] color;
+	delete[] chcolor;
 	delete[] ch;
 
 	return 0;
