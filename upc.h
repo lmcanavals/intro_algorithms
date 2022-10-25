@@ -13,7 +13,7 @@
  * validación
  * **********************************/
 
-/* validar si string es un entero [+\-]?\d+ */
+ /* validar si string es un entero [+\-]?\d+ */
 bool isInt(std::string str) {
 	bool digits = false;
 	for (int i = 0; i < str.size(); ++i) {
@@ -113,7 +113,7 @@ int randint(int a, int b) {
 
 #ifdef _WIN32
 
-/* si se compila en windows, intenta usar windows.h */
+ /* si se compila en windows, intenta usar windows.h */
 #include <windows.h>
 #include <conio.h>
 
@@ -151,7 +151,7 @@ void gotoxy(int x, int y) {
 	COORD coord;
 	coord.X = x;
 	coord.Y = y;
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),  coord);
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 void background(int color) {
@@ -174,10 +174,15 @@ void color(int forecolor, int backcolor = BLACK) {
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, backcolor << 4 | forecolor);
 }
+
+int randColor() {
+	return rand() % 16;
+}
+
 /* else del bloque _WIN32 */
 #else
 
-/* para gcc, macos, *nix se usa en su lugar, ncurses y unistd */
+ /* para gcc, macos, *nix se usa en su lugar, ncurses y unistd */
 #include <unistd.h>
 #include <sys/select.h>
 #include <termios.h>
@@ -241,7 +246,7 @@ int _kbhit() {
 	static const int STDIN = 0;
 	static bool initialized = false;
 
-	if (! initialized) {
+	if (!initialized) {
 		// Use termios to turn off line buffering
 		termios term;
 		tcgetattr(STDIN, &term);
