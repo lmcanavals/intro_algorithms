@@ -106,6 +106,14 @@ int randint(int a, int b) {
 	return rand() % (b - a) + a;
 }
 
+struct ConsoleInfo {
+	int numColumns;
+	int numRows;
+	int bottom;
+	int left;
+	int right;
+	int top;
+};
 
 /*************************************
  * elementos condicionales al sistema operativo
@@ -177,6 +185,29 @@ void color(int forecolor, int backcolor = BLACK) {
 
 int randColor() {
 	return rand() % 16;
+}
+
+void getConsoleInfo(ConsoleInfo* ci, int mt=0, int mr=0, int mb=0, int ml=0) {
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	ci->numColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	ci->numRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	ci->top = csbi.srWindow.Top + mt;
+	ci->right = csbi.srWindow.Right - mr;
+	ci->bottom = csbi.srWindow.Bottom - mb;
+	ci->left = csbi.srWindow.Left + ml;
+}
+
+void HideCursor() {
+
+	HANDLE hCon;
+	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cci;
+	cci.dwSize = 2;
+	cci.bVisible = FALSE;
+
+	SetConsoleCursorInfo(hCon, &cci);
+
 }
 
 /* else del bloque _WIN32 */
