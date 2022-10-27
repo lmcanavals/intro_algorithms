@@ -16,7 +16,7 @@
  /* validar si string es un entero [+\-]?\d+ */
 bool isInt(std::string str) {
 	bool digits = false;
-	for (int i = 0; i < str.size(); ++i) {
+	for (unsigned int i = 0; i < str.size(); ++i) {
 		if (i == 0 && str[i] == '-' || str[i] == '+') {
 			continue;
 		} else if (str[i] >= '0' && str[i] <= '9') {
@@ -32,7 +32,7 @@ bool isInt(std::string str) {
 bool isFloat(std::string str) {
 	bool digits = false;
 	bool dot = false;
-	for (int i = 0; i < str.size(); ++i) {
+	for (unsigned int i = 0; i < str.size(); ++i) {
 		if (i == 0 && str[i] == '-' || str[i] == '+') {
 			continue;
 		} else if (str[i] >= '0' && str[i] <= '9') {
@@ -187,7 +187,7 @@ int randColor() {
 	return rand() % 16;
 }
 
-void getConsoleInfo(ConsoleInfo* ci, int mt=0, int mr=0, int mb=0, int ml=0) {
+void getConsoleInfo(ConsoleInfo* ci, int mt = 0, int mr = 0, int mb = 0, int ml = 0) {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 	ci->numColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
