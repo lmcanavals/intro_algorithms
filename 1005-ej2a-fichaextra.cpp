@@ -71,11 +71,11 @@ int main() {
 		fig[i] = randFigure(ci);
 	}
 
-	HideCursor();
+	hideCursor();
 	for (;;) {
 		clear();
 		for (int i = 0; i < n; ++i) {
-			drawFigure(fig[i]);
+			drawFigure(fig[i], ci);
 			updateFigure(fig[i], ci);
 		}
 		sleep4(100);

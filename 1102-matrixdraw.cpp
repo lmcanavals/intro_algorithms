@@ -11,10 +11,9 @@
 using namespace std;
 
 char** newMatrix(int rows, int cols) {
-	char** mat = new char* [rows];
+	char** mat = new char*[rows];
 	for (int i = 0; i < rows; ++i) {
 		mat[i] = new char[cols];
-
 		for (int j = 0; j < cols; ++j) {
 			if (randint(1, 101) <= 5) {
 				mat[i][j] = (char)randint('0', '9' + 1);
@@ -62,6 +61,9 @@ void updateBuffer(World* w) {
 int main() {
 	ConsoleInfo* ci = new ConsoleInfo;
 	getConsoleInfo(ci, 2, 30, 2, 30);
+
+	cout << ci->numColumns << endl;
+	cout << ci->numRows << endl;
 
 	World* w = new World;
 	w->rows = ci->bottom - ci->top + 1;

@@ -54,19 +54,16 @@ void newDrops(Droplet* drops, int& ndrops) {
 
 void drawStuff(Droplet* drops, int& ndrops,
 			   int mx, int my,
-			   bool leave, int& fallspeed) {
+			   bool& leave, int& fallspeed) {
 	clear();
 	for (int i = 0; i < ndrops; ++i) {
 		if (drops[i].y < BOTTOM) {
 			gotoxy(drops[i].x, drops[i].y);
 			color(drops[i].color);
 			cout << drops[i].ch;
+			clearColor();
 			drops[i].y += fallspeed;
 			if (mx == drops[i].x && my == drops[i].y) {
-				clear();
-				gotoxy(0, 0);
-				color(BRIGHT_RED);
-				cout << "GAME OVER!";
 				leave = true;
 				break;
 			}
@@ -104,20 +101,25 @@ int main() {
 	int my = BOTTOM - 2;
 
 	int fallspeed = 1;
-	int delay = 250;
+	int delay = 150;
 	bool leave = false;
 
+	hideCursor();
 	while (!leave) {
 		newDrops(drops, ndrops);
 		drawStuff(drops, ndrops, mx, my, leave, fallspeed);
-		if (leave) break;
 		drawMainCharacter(mx, my);
-		handleInput(mx, my, leave);
+		if (leave) break;
 
-		gotoxy(0, 0);
 		sleep4(delay);
+		handleInput(mx, my, leave);
 	}
+	clear();
+	gotoxy(0, 0);
+	color(BRIGHT_RED);
+	cout << "GAME OVER\n";
 	clearColor();
+	showCursor();
 
 	delete[] drops;
 
