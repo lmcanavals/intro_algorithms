@@ -109,8 +109,8 @@ int randint(int a, int b) {
 }
 
 struct ConsoleInfo {
-	int numColumns;
-	int numRows;
+	int maxColumns;
+	int maxRows;
 	int bottom;
 	int left;
 	int right;
@@ -194,8 +194,8 @@ void color(int forecolor, int backcolor = BLACK) {
 void getConsoleInfo(ConsoleInfo* ci, int mt=0, int mr=0, int mb=0, int ml=0) {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	ci->numColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-	ci->numRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	ci->maxColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+	ci->maxRows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 	ci->top = csbi.srWindow.Top + mt;
 	ci->right = csbi.srWindow.Right - mr;
 	ci->bottom = csbi.srWindow.Bottom - mb;
@@ -285,11 +285,11 @@ void color(int forecolor, int backcolor = -1) {
 void getConsoleInfo(ConsoleInfo* ci, int mt=0, int mr=0, int mb=0, int ml=0) {
 	winsize size;
 	ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
-	ci->numColumns = size.ws_col;
-	ci->numRows = size.ws_row;
+	ci->maxColumns = size.ws_col;
+	ci->maxRows = size.ws_row;
 	ci->top = mt;
-	ci->right = ci->numColumns - mr - 1;
-	ci->bottom = ci->numRows - mb - 1;
+	ci->right = ci->maxColumns - mr - 1;
+	ci->bottom = ci->maxRows - mb - 1;
 	ci->left = ml;
 	ci->boxRows = ci->bottom - ci->top + 1;
 	ci->boxCols = ci->right - ci->left + 1;

@@ -1,4 +1,3 @@
-// copiar todo éste código a un archivo llamado randmap.h sin las 2 primeras lineas
 #ifndef __RANDMAP_H__
 #define __RANDMAP_H__
 

@@ -62,8 +62,8 @@ int main() {
 	ConsoleInfo* ci = new ConsoleInfo;
 	getConsoleInfo(ci, 2, 30, 2, 30);
 
-	cout << ci->numColumns << endl;
-	cout << ci->numRows << endl;
+	cout << ci->maxColumns << endl;
+	cout << ci->maxRows << endl;
 
 	World* w = new World;
 	w->rows = ci->bottom - ci->top + 1;
