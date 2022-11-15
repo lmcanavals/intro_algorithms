@@ -191,6 +191,8 @@ void clearColor() {
 
 /* utilice solo esta funcion */
 void color(int forecolor, int backcolor = BLACK) {
+	forecolor = __WINCOLOR__[forecolor];
+	backcolor = __WINCOLOR__[backcolor];
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, backcolor << 4 | forecolor);
 }
