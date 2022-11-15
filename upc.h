@@ -204,13 +204,35 @@ void getConsoleInfo(ConsoleInfo* ci, int mt=0, int mr=0, int mb=0, int ml=0) {
 	ci->boxCols = ci->right - ci->left + 1;
 }
 
-void HideCursor() {
+void hideCursor() {
 	HANDLE hCon;
 	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
 	CONSOLE_CURSOR_INFO cci;
 	cci.dwSize = 2;
 	cci.bVisible = FALSE;
 	SetConsoleCursorInfo(hCon, &cci);
+}
+
+void showCursor() {
+	HANDLE hCon;
+	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cci;
+	cci.dwSize = 2;
+	cci.bVisible = TRUE;
+	SetConsoleCursorInfo(hCon, &cci);
+}
+
+void noecho() {
+	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE); 
+	DWORD mode = 0;
+	GetConsoleMode(hStdin, &mode);
+	SetConsoleMode(hStdin, mode & (~ENABLE_ECHO_INPUT));
+}
+void echo() {
+	HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE); 
+	DWORD mode = 0;
+	GetConsoleMode(hStdin, &mode);
+	SetConsoleMode(hStdin, mode & (ENABLE_ECHO_INPUT));
 }
 
 /* else del bloque _WIN32 */
