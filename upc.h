@@ -123,6 +123,25 @@ int randColor() {
 	return rand() % 16;
 }
 
+enum Colors {
+	BLACK,
+	DARK_RED,
+	DARK_GREEN,
+	DARK_YELLOW,
+	DARK_BLUE,
+	DARK_MAGENTA,
+	DARK_CYAN,
+	DARK_WHITE,
+	BRIGHT_BLACK,
+	BRIGHT_RED,
+	BRIGHT_GREEN,
+	BRIGHT_YELLOW,
+	BRIGHT_BLUE,
+	BRIGHT_MAGENTA,
+	BRIGHT_CYAN,
+	WHITE
+};
+
 /*************************************
  * elementos condicionales al sistema operativo
  * **********************************/
@@ -134,23 +153,25 @@ int randColor() {
 #include <conio.h>
 
 enum Colors {
-	BLACK,
-	DARK_BLUE,
-	DARK_GREEN,
-	DARK_CYAN,
-	DARK_RED,
-	DARK_MAGENTA,
-	DARK_YELLOW,
-	DARK_WHITE,
-	BRIGHT_BLACK,
-	BRIGHT_BLUE,
-	BRIGHT_GREEN,
-	BRIGHT_CYAN,
-	BRIGHT_RED,
-	BRIGHT_MAGENTA,
-	BRIGHT_YELLOW,
-	WHITE
+BLACK,		BLACK,
+DARK_RED,	DARK_BLUE,
+DARK_GREEN,	DARK_GREEN,
+DARK_YELLOW,	DARK_CYAN,
+DARK_BLUE,	DARK_RED,
+DARK_MAGENTA,	DARK_MAGENTA,
+DARK_CYAN,	DARK_YELLOW,
+DARK_WHITE,	DARK_WHITE,
+BRIGHT_BLACK,	BRIGHT_BLACK,
+BRIGHT_RED,	BRIGHT_BLUE,
+BRIGHT_GREEN,	BRIGHT_GREEN,
+BRIGHT_YELLOW,	BRIGHT_CYAN,
+BRIGHT_BLUE,	BRIGHT_RED,
+BRIGHT_MAGENTA,	BRIGHT_MAGENTA,
+BRIGHT_CYAN,	BRIGHT_YELLOW,
+WHITE		WHITE
 };
+
+int __WINCOLOR__[] = { 0, 4, 2, 6, 1, 5, 3, 7, 8, 12, 10, 14, 9, 13, 11, 15 };
 
 /* dormir (detener) proceso por x milisegundos */
 void sleep4(int milliseconds) {
@@ -171,11 +192,13 @@ void gotoxy(int x, int y) {
 }
 
 void background(int color) {
+	color = __WINCOLOR__[color];
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, color << 4);
 }
 
 void foreground(int color) {
+	color = __WINCOLOR__[color];
 	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(handle, color);
 }
@@ -243,25 +266,6 @@ void echo() {
 #include <sys/select.h>
 #include <termios.h>
 #include <sys/ioctl.h>
-
-enum Colors {
-	BLACK,
-	DARK_RED,
-	DARK_GREEN,
-	DARK_YELLOW,
-	DARK_BLUE,
-	DARK_MAGENTA,
-	DARK_CYAN,
-	DARK_WHITE,
-	BRIGHT_BLACK,
-	BRIGHT_RED,
-	BRIGHT_GREEN,
-	BRIGHT_YELLOW,
-	BRIGHT_BLUE,
-	BRIGHT_MAGENTA,
-	BRIGHT_CYAN,
-	WHITE
-};
 
 /* dormir (detener) proceso por x milisegundos */
 void sleep4(int milliseconds) {
