@@ -18,6 +18,7 @@ int main() {
 
 	for (;;) {
 		clear();
+		hideCursor();
 		gotoxy(x, y);
 		cout << "hello, world!" << endl;
 		x += dx; y += dy;
@@ -32,6 +33,7 @@ int main() {
 		}
 		sleep4(100);
 	}
+	resetAll();
 
 	return 0;
 }
