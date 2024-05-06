@@ -3,8 +3,10 @@
 #define __UPC_H__
 
 /* includes generales */
+#include <cstdint>
 #include <iomanip>
 #include <iostream>
+#include <random>
 #include <stdlib.h>
 #include <string>
 
@@ -17,7 +19,7 @@
 /* validar si string es un entero [+\-]?\d+ */
 inline bool isInt(std::string str) {
   bool digits = false;
-  for (unsigned int i = 0; i < str.size(); ++i) {
+  for (uint32_t i = 0; i < str.size(); ++i) {
     if (i == 0 && (str[i] == '-' || str[i] == '+')) {
       continue;
     } else if (str[i] >= '0' && str[i] <= '9') {
@@ -33,7 +35,7 @@ inline bool isInt(std::string str) {
 inline bool isFloat(std::string str) {
   bool digits = false;
   bool dot = false;
-  for (unsigned int i = 0; i < str.size(); ++i) {
+  for (uint32_t i = 0; i < str.size(); ++i) {
     if (i == 0 && (str[i] == '-' || str[i] == '+')) {
       continue;
     } else if (str[i] >= '0' && str[i] <= '9') {
@@ -75,6 +77,17 @@ inline float readFloat(std::string msg) {
   } while (!isFloat(str));
   return stof(str);
 }
+inline double readDouble(std::string msg) {
+  std::string str;
+  do {
+    std::cout << msg;
+    getline(std::cin, str);
+    if (!isFloat(str)) {
+      std::cout << "<" << str << "> no es un número real.\n";
+    }
+  } while (!isFloat(str));
+  return std::stod(str);
+}
 
 /* validando feamente un rango entero */
 inline int readIntRange(std::string msg, int min, int max) {
@@ -101,11 +114,25 @@ inline float readFloatRange(std::string msg, float min, float max) {
   } while (num < min || num > max);
   return num;
 }
+inline double readDoubleRange(std::string msg, double min, double max) {
+  double num;
+  do {
+    num = readDouble(msg);
+    if (num < min || num > max) {
+      std::cout << "<" << num << "> no está en el rango [" << min << ".." << max
+                << "]\n";
+    }
+  } while (num < min || num > max);
+  return num;
+}
 
 /**
  * generar número aleatorio entre a y b, [a, b> sin incluir b.
  */
-inline int randint(int a, int b) { return rand() % (b - a) + a; }
+inline int randint(int a, int b, std::random_device rd = std::random_device()) {
+  std::mt19937_64 gen(rd());
+  return gen() % (b - a) + a;
+}
 
 struct ConsoleInfo {
   int maxColumns;
@@ -149,6 +176,11 @@ enum Colors {
 #include <conio.h>
 #include <windows.h>
 
+#define UP_KEY 82
+#define DOWN_KEY 80
+#define RIGHT_KEY 77
+#define LEFT_KEY 75
+
 int __WINCOLOR__[] = {0, 4, 2, 6, 1, 5, 3, 7, 8, 12, 10, 14, 9, 13, 11, 15};
 
 /* dormir (detener) proceso por x milisegundos */
@@ -191,7 +223,7 @@ inline void color(int forecolor, int backcolor = BLACK) {
 }
 
 inline void getConsoleInfo(ConsoleInfo *ci, int mt = 0, int mr = 0, int mb = 0,
-                    int ml = 0) {
+                           int ml = 0) {
   CONSOLE_SCREEN_BUFFER_INFO csbi;
   GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
   ci->maxColumns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
@@ -244,6 +276,11 @@ inline void echo() {
 #include <termios.h>
 #include <unistd.h>
 
+#define UP_KEY 'A'
+#define DOWN_KEY 'B'
+#define RIGHT_KEY 'C'
+#define LEFT_KEY 'D'
+
 /* dormir (detener) proceso por x milisegundos */
 inline void sleep4(int milliseconds) { usleep(milliseconds * 1000); }
 
@@ -278,7 +315,7 @@ inline void color(int forecolor, int backcolor = -1) {
 }
 
 inline void getConsoleInfo(ConsoleInfo *ci, int mt = 0, int mr = 0, int mb = 0,
-                    int ml = 0) {
+                           int ml = 0) {
   winsize size;
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
   ci->maxColumns = size.ws_col;
