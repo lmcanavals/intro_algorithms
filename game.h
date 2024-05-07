@@ -22,13 +22,13 @@ struct Map {
  *		-> C: background color, hex values from 0 to f (0..15) 4 bits
  *		-> AB: and the rest, represent a glyph code, hex value from 0 to ffffff.
  * */
-void decodeCell(Cell& cell, int codedCell) {
+inline void decodeCell(Cell& cell, int codedCell) {
 	cell.fcolor = codedCell & 0x0f;
 	cell.bcolor = (codedCell >> 4) & 0x0f;
 	cell.glyph = codedCell >> 8;
 }
 
-Map* loadMap(std::string filename) {
+inline Map* loadMap(std::string filename) {
 	Map* map = new Map;
 	std::ifstream f(filename);
 	if (!f.is_open()) return nullptr;
@@ -47,7 +47,7 @@ Map* loadMap(std::string filename) {
 	return map;
 }
 
-void destroyMap(Map*& map) {
+inline void destroyMap(Map*& map) {
 	for (int i = 0; i < map->rows; ++i) {
 		delete[] map->cells[i];
 	}

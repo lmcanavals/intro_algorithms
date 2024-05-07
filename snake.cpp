@@ -45,7 +45,6 @@ void drawApple(Apple *apple, ConsoleInfo *ci) {
   color(apple->color);
   cout << apple->c;
   clearColor();
-  cout << endl;
 }
 
 Snake *newSnake(ConsoleInfo *ci) {
@@ -99,7 +98,6 @@ void drawSnake(Snake *snake, ConsoleInfo *ci) {
     }
   }
   clearColor();
-  cout << endl;
 }
 
 bool updateSnake(Snake *snake, ConsoleInfo *ci) {
@@ -162,7 +160,6 @@ void frame(ConsoleInfo *ci) {
     cout << "#";
   }
   clearColor();
-  cout << endl;
 }
 
 int main() {
@@ -189,26 +186,26 @@ int main() {
       createApple(apple, ci);
     }
     if (_kbhit()) {
-      char c = _getch();
-      c = tolower(c);
+      char c = toupper(_getch());
       switch (c) {
-      case 'w':
+      case UP_KEY:
         snake->dir = UP;
         break;
-      case 'a':
+      case LEFT_KEY:
         snake->dir = LEFT;
         break;
-      case 's':
+      case DOWN_KEY:
         snake->dir = DOWN;
         break;
-      case 'd':
+      case RIGHT_KEY:
         snake->dir = RIGHT;
         break;
-      case 'x':
+      case 'X':
         leave = true;
         break;
       }
     }
+		cout << endl;
     sleep4(100);
   }
   byeSnake(snake);

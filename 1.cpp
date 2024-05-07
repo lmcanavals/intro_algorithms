@@ -1,5 +1,3 @@
-#include <iomanip>
-
 #include "upc.h"
 
 using namespace std;
